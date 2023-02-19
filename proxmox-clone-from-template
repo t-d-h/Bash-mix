@@ -1,0 +1,119 @@
+#!/bin/bash
+
+echo " Proxmox OpenVZ Server Provisioning Tool"
+echo ""
+echo " Please select from the below choices"
+echo ""
+echo " 1. KVM Server Instance Provisioning"
+echo " 2. KVM Server Instance Decommissioning"
+echo ""
+read -p "Please enter you numerical choice: " choice
+
+echo $choice
+
+if [ "$choice" -lt 1 ] || [ "$choice" -gt 2 ]; then
+                        echo "Wrong choice selection - Existing the program - Please try again"
+                        exit
+                if [ "$choice" -eq 1 ]; then
+                        echo " Initiating Server Provisioning Procedure"
+                elif [ "$choice" -eq 2 ]; then
+                        echo " Initiating Server Decommissioning Procedure"
+
+                fi
+
+fi
+
+case $choice in
+1)
+##### SECTION FOR TOTAL NUMBER OF SERVER AND OPERATING SYSTEM SELECTION #####
+echo "Enter the number of servers needed (1-5)"
+echo ""
+read -p "Please enter the numerical value: " kvmsrvno
+if [ "$kvmsrvno" -le 0 ] || [ "$kvmsrvno" -gt 5 ]
+        then
+                echo "Please try again by entering a valid number between (1-6)"
+                exit
+        else
+                echo "Enter the number corresponding to the operating system 1.Windows2012 2.Windows2008R2 3.WindowsXP 4.Windows7 5.RedHat6 6.CentOS6"
+                read -p "Please enter the numerical value: " kvmselection
+    if [ "$kvmselection" -le 0 ] || [ "$kvmselection" -gt 6 ]
+        then
+                echo "Please try again by entering a valid number between 1,2,3,4,5 or 6"
+        exit
+    fi
+fi
+#echo "The operating system selected is $kvmselection"
+
+############################################################fngetvmid() {
+        pvesh get /cluster/resources --type vm |grep -i vmid |sort -n |awk '{print $3}' > /mnt/pve/ISO/automation_scripts/allocated_vmid
+while read avail_vmid
+do
+                grep -x $avail_vmid /mnt/pve/ISO/automation_scripts/allocated_vmid > /dev/null
+        if [ `echo $?` -ne 0 ]
+        then
+                VMID=$avail_vmid
+                echo $VMID
+                exit
+        fi
+done <  /mnt/pve/ISO/automation_scripts/vmidlist
+}
+#vm_id=$(fngetvmid)
+
+##############################################################
+fngetkvmhostname() {
+case $kvmselection in
+  1)
+        hostname=Win2012-$vm_id;
+        clntmpt=128;;
+  2)
+        hostname=Win2008R2-$vm_id;
+        clntmpt=125;;
+  3)
+        hostname=WindowsXP-$vm_id;
+        clntmpt=126;;
+  4)
+        hostname=Windows7-$vm_id;
+        clntmpt=127;;
+  5)
+        hostname=Redhat6-$vm_id;
+        clntmpt=123;;
+  6)
+        hostname=CentOS6-$vm_id;
+        clntmpt=116;;
+ esac
+}
+
+##################################################################
+count=1
+while [ "$count" -le "$kvmsrvno" ]
+    do
+        #ip_addr=$(fngetip)
+        vm_id=$(fngetvmid)
+        fngetkvmhostname
+        pvesh create /nodes/`hostname`/qemu/$clntmpt/clone --newid $vm_id --full --name=$hostname #--pool="$poolname"
+                #echo $ip_addr >> /mnt/pve/ISO/automation_scripts/allocated_list
+        echo "#################################################################"
+        count=`expr $count + 1`
+        done;
+break;;
+
+2)
+        echo "KVM Server Decommissioning Initiated"
+        echo ""
+        echo "Please specify the VMIDs of the instances to be decommissioned (Use comma separated values)"
+        echo ""
+        read -p "Please enter the numerical value: " delvid
+
+        IFS=","
+        for vmid in $delvid
+        do
+        #v_delip=`grep -i IP_ADDRESS /etc/vz/conf/$vmid.conf |sed -r 's/[^\"]*([\"][^\"]*[\"][,]?)[^\"]*/\1 /g' | sed "s/\"//g"`
+        #delip=sed
+        qm stop $vmid
+        qm destroy $vmid
+        #sed -i "s/$delip//g" "/opt/automation_scripts/allocated_list"
+        #sed -i '/^$/d' "/opt/automation_scripts/allocated_list"
+        echo "#################################################################"
+        done;
+break;;
+esac
