@@ -5,19 +5,22 @@
 # google-chrome --profile-directory=YOUR_PROFILE_NAME 
 
 #check k9s version here: https://github.com/derailed/k9s/releases
+# alias sshk='ssh-agent && eval "$(ssh-agent)" && ssh-add ~/.ssh/id_ed25519 && ssh -A'
+# alias vaulttoken="ssh hoantd@setup1v.itim.vn 'sudo cat /etc/coccoc/vault/token_admin' | xclip -sel clip"
+
 k9s_version=v0.32.5
 helm_verion=v3.15.3
 
-apt_pkgs="curl wget telegram-desktop apt-transport-https ca-certificates python3-pip python3 python3-venv konsole tmux ffmpeg calibre gpg smartmontool"
-snap_pkgs="skype kustomize"
+apt_pkgs="curl wget telegram-desktop apt-transport-https ca-certificates python3-pip python3 python3-venv konsole tmux ffmpeg calibre gpg smartmontool xclip vim"
+snap_pkgs="skype kustomize terraform"
 
 echo "#################################################################"
 echo "Setup alias"
-echo "kg='kubectl get -o wide'"  >> ~/.bashrc
-echo "kd='kubectl describe'" >> ~/.bashrc
-echo "kl='kubectl logs'" >> ~/.bashrc
-echo "k='kubectl'" >> ~/.bashrc
-echo "kus='kustomize build'" >> ~/.bashrc
+echo "alias kg='kubectl get -o wide'"  >> ~/.bashrc
+echo "alias kd='kubectl describe'" >> ~/.bashrc
+echo "alias kl='kubectl logs'" >> ~/.bashrc
+echo "alias k='kubectl'" >> ~/.bashrc
+echo "alias kus='kustomize build'" >> ~/.bashrc
 source ~/.bashrc
 
 echo "#################################################################"
