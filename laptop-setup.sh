@@ -7,6 +7,11 @@
 #check k9s version here: https://github.com/derailed/k9s/releases
 # alias sshk='ssh-agent && eval "$(ssh-agent)" && ssh-add ~/.ssh/id_ed25519 && ssh -A'
 # alias vaulttoken="ssh hoantd@setup1v.itim.vn 'sudo cat /etc/coccoc/vault/token_admin' | xclip -sel clip"
+# alias t3-phong-tho='ffplay rtsp://prometheus:prometheus@100.120.18.138:8554/t3-phong-tho'
+# alias t2-phong-khach='ffplay rtsp://prometheus:prometheus@100.120.18.138:8554/t2-phong-khach'
+# alias t2-phong-bep='ffplay  rtsp://prometheus:prometheus@100.120.18.138:8554/t2-phong-bep'
+# alias t1-san-chinh='ffplay rtsp://prometheus:prometheus@100.120.18.138:8554/t1-san-chinh'
+
 
 k9s_version=v0.32.5
 helm_verion=v3.15.3
