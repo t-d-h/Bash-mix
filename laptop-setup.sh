@@ -9,6 +9,7 @@
 # alias vaulttoken="ssh hoantd@setup1v.itim.vn 'sudo cat /etc/coccoc/vault/token_admin' | xclip -sel clip"
 # alias t3-phong-tho='ffplay rtsp://prometheus:prometheus@100.120.18.138:8554/t3-phong-tho'
 # alias t2-phong-khach='ffplay rtsp://prometheus:prometheus@100.120.18.138:8554/t2-phong-khach'
+# alias t2-phong-ngu='ffplay  rtsp://prometheus:prometheus@100.120.18.138:8554/t2-phong-ngu'
 # alias t2-phong-bep='ffplay  rtsp://prometheus:prometheus@100.120.18.138:8554/t2-phong-bep'
 # alias t1-san-chinh='ffplay rtsp://prometheus:prometheus@100.120.18.138:8554/t1-san-chinh'
 
