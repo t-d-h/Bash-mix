@@ -18,7 +18,7 @@ k9s_version=v0.32.5
 helm_verion=v3.15.3
 
 apt_pkgs="curl git wget telegram-desktop apt-transport-https ca-certificates python3-pip python3 python3-venv konsole tmux ffmpeg calibre gpg smartmontool xclip vim"
-snap_pkgs="skype kustomize terraform"
+snap_pkgs="snap kustomize terraform"
 
 echo "#################################################################"
 echo "Setup alias"
